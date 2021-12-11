@@ -47,8 +47,8 @@
               <table id="employeesTable" class="table table-bordered">
                 <thead>
                 <tr>                  
-                  <th>Name</th> 
-                  <th>Branch</th>                 
+                  <th>Branch</th> 
+                  <th>Name</th>                 
                   <th>Phone</th>
                   <th>Username</th>
                   <th>Salary(H)</th>

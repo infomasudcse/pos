@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,        
-        //Barryvdh\DomPDF\ServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         
         /*
@@ -231,6 +230,7 @@ return [
         //'PDF' => Barryvdh\DomPDF\Facade::class,
         'Helper' => App\Helper\Helper::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        
 
     ],
 

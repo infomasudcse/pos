@@ -162,11 +162,7 @@ class ItemController extends Controller
          $itemData =[]; 
          $i=1;       
          foreach($items as $item){
-            $action = "<div class='btn-group'>                       
-                        <a href='#' type='button' title='Details' class='btn btn-sm btn-default mr-3 btn-item-table'><i class='fas fa-info-circle'></i> Details</a>
-                        <a href='#' type='button' title='photo/video' class='btn btn-sm btn-default mr-3 btn-item-table'><i class='fas fa-photo-video'></i> Media</a>
-                        <a href='#' type='button' title='photo/video' class='btn btn-sm btn-default mr-3 btn-item-table'><i class='fab fa-facebook-square'></i> Facebook</a>
-
+            $action = "<div class='btn-group'>
                         <a type='button' title='Edit' href='".url('items/'.$item->id.'/edit')."' class='btn btn-sm btn-default mr-3 btn-item-table'><i class='fas fa-edit'></i> Edit</a>
                         <form action='items/".$item->id."' method='post'>
                         <input type='hidden' name='_token' value='".csrf_token()."' />

@@ -53,6 +53,8 @@ class ConfigController extends Controller
             'default_tax'=>$request->input('default_tax'),
             'email'=>$request->input('email'),
             'autobarcode'=> $request->input('autobarcode')?: 0 ,
+            'br_line'=> $request->input('br_line'),
+            'ecommerce'=> $request->input('ecommerce')?: 0 ,
             ];
         $res = Config::where('id', 1)->update($newConfig);    
          

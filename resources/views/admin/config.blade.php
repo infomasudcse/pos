@@ -35,7 +35,7 @@
           <div class="col-lg-12">
             <div class="card card-secondary card-outline">
               <div class="card-header">
-                <h5 class="m-0">Update Configuration</h5>
+                <h5 class="m-0">Basic Configuration</h5>
               </div>
               <div class="card-body">
                 
@@ -99,6 +99,12 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <div class="col">
+                        <h3 class="form-title">Bar Code Setup</h3>
+                      </div>
+                    </div>     
+
+                    <div class="form-group row">
                       <label for="nobarcode" class="col-3 col-form-label">No Auto Bar Code</label>
                       <div class="col-2">
                         <input type="checkbox" class="form-control" name="autobarcode" id="nobarcode" value="1" {{ (($cf->autobarcode) ? 'checked': '') }}>
@@ -110,6 +116,46 @@
 
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                      <label for="nobarcode" class="col-3 col-form-label">Label Print Per Row </label>
+                      <div class="col-6">
+
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" value="1" name="br_line" class="custom-control-input" {{ (($cf->br_line=='1') ? 'checked': '') }}>
+                            <label class="custom-control-label" for="customRadio1"> 1 [ 1 Bar code per line ]</label>
+                          </div>
+
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" value="2" name="br_line" class="custom-control-input" {{ (($cf->br_line=='2') ? 'checked': '') }}>
+                            <label class="custom-control-label" for="customRadio2"> 2 [ 2 Bar code per line ]</label>
+                          </div>
+
+                          <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio3" value="4" name="br_line" class="custom-control-input" {{ (($cf->br_line=='4') ? 'checked': '') }}>
+                            <label class="custom-control-label" for="customRadio3">4 [4 Bar code per line ]</label>
+                          </div>
+
+                      </div>                      
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col"><h3 class="form-title">Ecommerce Setup</h3></div>
+                    </div>  
+
+                    <div class="form-group row">
+                      <label for="ecommerce" class="col-3 col-form-label">Enable </label>
+                      <div class="col-2">
+                        <input type="checkbox" class="form-control" name="ecommerce" id="ecommerce" value="1" {{ (($cf->ecommerce) ? 'checked': '') }}>
+                      </div>
+                      <div class="col-4">
+                           <p id="check-msg" class="d-inline-block text-truncate font-weight-light font-italic text-danger"> 
+                          {{ (($cf->ecommerce) ? 'Ecommerce Active': 'Ecommerce Not Active') }}
+                          </p>
+
+                        </div>
+                    </div>
+
                   
                   
                 </div>

@@ -1,30 +1,16 @@
 @extends('admin')
 
-
-
 @section('content')
 
- 
-
-
-
 <div class="content">
-
   <div class="container-fluid">
-
     <div class="row">
-
     <div class="col-sm-12"><button type="button" onClick="return  print_this('receiptDiv') " class=" float-right btn btn-sm btn-default">Print</button></div>         
 
       <div class="col-lg-12">
-
         <div class="card card-primary card-outline">
-
              
-
           <div class="card-body" id="receiptDiv">
-
-
 
         <style type="text/css">
 
@@ -41,35 +27,18 @@
         .medium-font{font-size:10px;}
 
         .single-line{line-height: 90%;}
-
         
-
-        </style>
+       </style>
 
 
 
 
 
         <?php
-//   $num = '123456789012';
-//   echo $num; 
-//  echo 'I25';
-//  echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($num, 'I25',1,20) . '" />';
-//  echo 'C128';
-//  echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($num, 'C128',1,20) . '" />';
-//  echo 'C128A';
-//  echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($num, 'C128A',1,20) . '" />';
-//  echo 'C93';
-//  echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($num, 'C93',1,20) . '" />';
-
-
-// echo '<hr/>';
 
         $json = json_decode($inv->variation);
 
-        $img =  '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($inv->sku,'C128',1,20) . '" alt="barcode"   />';  
-
-
+        $img =  '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($inv->sku,'C128',1,20) . '" alt="barcode"   />'; 
 
         $str = '';
 
@@ -81,13 +50,7 @@
 
         ?>
 
-
-
-
-
         <div class="" id="" style="width:50%;">
-
-
 
           <table style="width:100%;" style="margin-left:2%;margin-top:2%;" cellpadding="1" border="0">
 
@@ -95,11 +58,7 @@
 
           $price = Helper::toCurrency($inv->unit_price);
 
-
-
           echo "<tr>";
-
-
 
           for($i=1;$i<=$qty;$i++){
 
@@ -127,7 +86,7 @@
 
                 echo "</tr><tr>";
 
-               }                    
+               }                   
 
           }
 
@@ -136,20 +95,13 @@
        ?>
 
 
-
-
-
           </table>
-
-
 
         </div>
 
       </div>
 
     </div>
-
-
 
         </div>
 
@@ -159,8 +111,6 @@
 
 </div>          
 
-
-
 <script type="text/javascript">
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -169,10 +119,6 @@
 
 }, false);
 
-
-
 </script>
-
-
 
 @endsection

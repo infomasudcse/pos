@@ -27,6 +27,8 @@ class CreateConfigsTable extends Migration
             $table->string('default_tax_name')->default('VAT');
             $table->string('branch_qty')->default(3);
             $table->tinyInteger('autobarcode')->default(0);
+            $table->tinyInteger('br_line')->default(0);
+            $table->tinyInteger('ecommerce')->default(0);
             $table->string('support',30)->default('Refine Software');
             $table->string('support_link',50)->default('http://www.refinesoftware.com'); 
             $table->string('support_contact',30)->default('01763036764');   
