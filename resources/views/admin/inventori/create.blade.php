@@ -144,41 +144,34 @@
 
                   </div>
 
-                <!-- <div class="form-group row">
+                  <?php if($config->autobarcode): ?>
+                    <div class="form-group row">
+                        <label for="sku" class="col-sm-2 col-form-label">Bar Code/SKU</label>
+                        <div class="col-sm-6">
+                          <input type="numeric" step="1" name="sku" class="form-control is-warning" id="sku"  value="{{ old('sku') }}" required>
+                        </div>
+                        <div class="col-4">
+                           <p class="d-inline-block text-truncate font-weight-light font-italic"> Bar Code Required As auto bar code off ! </p>
 
-                    <label for="sku" class="col-sm-2 col-form-label">SKU</label>
+                        </div>
+                    </div> 
+                <?php endif; ?>
 
-                    <div class="col-sm-6">
-
-                      <input type="text" name="sku" class="form-control is-warning" id="sku"  value="{{ old('sku') }}">
-
-                    </div>
-
-                    <div class="col-sm-4 form-check error-sku">
-
-                        
-
-                          <input class="form-check-input" name="auto_sku" value="1" type="checkbox">
-
-                          <label class="form-check-label">Auto Generated SKU</label>
-
-                       
-
-                    </div>
-
-                </div> -->
 
                 <div class="form-group row">
 
                     <label for="qty" class="col-sm-2 col-form-label">Quantity</label>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
 
-                      <input type="number" name="qty" class="form-control is-warning" id="qty"  value="{{ old('qty') }}">
+                      <input type="number" name="qty" class="form-control is-warning" id="qty"  value="{{ old('qty') }}" required>
 
                     </div>
 
-                    <div class="col-sm-2 error-qty"></div>
+                    <div class="col-4">
+                           <p class="d-inline-block text-truncate font-weight-light font-italic"> Quantity Required  </p>
+
+                        </div>
 
                 </div>
 
@@ -186,27 +179,32 @@
 
                     <label for="costp" class="col-sm-2 col-form-label">Cost Price</label>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
 
-                      <input type="number" step=".01" name="costp" class="form-control is-warning" id="costp"  value="{{ old('costp') }}">
+                      <input type="number" step=".01" name="costp" class="form-control is-warning" id="costp"  value="{{ old('costp') }}" required>
 
                     </div>
 
-                    <div class="col-sm-2 error-costp"></div>
+                    <div class="col-4">
+                           <p class="d-inline-block text-truncate font-weight-light font-italic"> Item unit cost </p>
 
+                        </div>
                 </div>
 
                 <div class="form-group row">
 
                     <label for="salep" class="col-sm-2 col-form-label">Sale Price</label>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
 
-                      <input type="number" step=".01" name="salep" class="form-control is-warning" id="salep"  value="{{ old('salep') }}">
+                      <input type="number" step=".01" name="salep" class="form-control is-warning" id="salep"  value="{{ old('salep') }}" required>
 
                     </div>
 
-                    <div class="col-sm-2 error-salep"></div>
+                    <div class="col-4">
+                           <p class="d-inline-block text-truncate font-weight-light font-italic"> Item unit sell price </p>
+
+                        </div>
 
                 </div>
 

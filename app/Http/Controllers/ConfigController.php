@@ -51,7 +51,8 @@ class ConfigController extends Controller
             'return_policy'=>$request->input('return_policy'),
             'default_tax_name'=>$request->input('default_tax_name'),
             'default_tax'=>$request->input('default_tax'),
-            'email'=>$request->input('email')
+            'email'=>$request->input('email'),
+            'autobarcode'=> $request->input('autobarcode')?: 0 ,
             ];
         $res = Config::where('id', 1)->update($newConfig);    
          

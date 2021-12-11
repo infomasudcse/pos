@@ -4,11 +4,11 @@
 
 @section('content')
 
- <!-- Content Header (Page header) -->
+ <!-- Content Header Page header -->
+
+
 
  <div class="content-header">
-
-
 
       <div class="container-fluid">
 
@@ -99,22 +99,18 @@
                       <input type="text" name="name" class="form-control is-warning" id="iteminput"  value="{{ old('name') }}">
 
                     </div>
-
                   </div>
+
+                  <?php if(!$config->autobarcode): ?>
 
                   <div class="form-group row">
-
                     <label for="br" class="col-sm-2 col-form-label">Bar code</label>
-
                     <div class="col-sm-10">
-
-                      <input type="number" class="form-control is-warning" id="br" name="br_code"  value="{{ old('br_code') }}" placeholder="10-99">
-
+                      <input type="number" step=".1" class="form-control is-warning" id="br" name="br_code"  value="{{ old('br_code') }}" placeholder="10-99" required>
                     </div>
-
                   </div>
 
-                 
+                 <?php endif; ?>
 
                   <div class="form-group row">
 

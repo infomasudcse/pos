@@ -26,7 +26,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $categories =Category::all();       
+        $categories =Category::all(); 
+      
         if($categories->count() > 0){
             return view('admin.item.create',['title'=>$this->title,'categories'=>$categories]); 
         }else{
@@ -42,18 +43,21 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //print_r($request->all());
-        $validatedData = $request->validate([ 
+       
+        $rules = [ 
             'category_id' =>'required|numeric',
             'subcategory_id' =>'required|numeric',                     
             'name' => 'required|max:30',
             'active' =>'numeric',
-            ]);
+        ];
+       
+        $validatedData = $request->validate($rules);
         //validate
         $item = new Item;           
         $item->category_id = $request->category_id;
         $item->subcategory_id = $request->subcategory_id;            
         $item->name = ucwords($request->name);
+
         $item->active = $request->active;
        
         if($item->save()){

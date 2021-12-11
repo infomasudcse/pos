@@ -161,6 +161,14 @@ $('#iteminput').focus();
 $('#productsearch').focus();
 $('#firstInput').focus();
 
+$('#nobarcode').change(function(){
+  if($(this).is(':checked')){
+    $("#check-msg").html('Manual Bar Code will be Needed on Inventory Creation !');
+  }else{
+    $("#check-msg").html('Bar code will be auto generated ! ');
+  }
+});
+
 //document ready end
   });
 

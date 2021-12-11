@@ -124,20 +124,20 @@
 
                   </div> 
 
-
+                  <?php if(!$config->autobarcode): ?>
 
                    <div class="form-group row">
 
-                    <label for="br" class="col-sm-2 col-form-label">Bar code</label>
+                        <label for="br" class="col-sm-2 col-form-label">Bar code</label>
 
-                    <div class="col-sm-10">
+                        <div class="col-sm-10">
 
-                      <input type="number" class="form-control is-warning" id="br" name="br_code"  value="{{ old('br_code') }}" placeholder="100-999">
+                          <input type="number" class="form-control is-warning" id="br" name="br_code"  value="{{ old('br_code') }}" placeholder="100-999">
 
-                    </div>
+                        </div>
 
-                  </div>
-
+                      </div>
+                    <?php endif; ?>
 
 
 

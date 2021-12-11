@@ -72,7 +72,8 @@
                     </div>
                   </div> 
 
-                   <div class="form-group row">
+
+                    <div class="form-group row">
                     <label for="active" class="col-sm-2 col-form-label">Item Name</label>
                     <div class="col-sm-4">
                          <select id="active" name="active" class="form-control">
@@ -81,6 +82,7 @@
                         </select>
                     </div>
                   </div>  
+
 
 
                 </div>

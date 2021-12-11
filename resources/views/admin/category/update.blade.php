@@ -102,7 +102,7 @@
 
                   </div> 
 
-
+                  <?php if(!$config->autobarcode): ?>
 
                   <div class="form-group row">
 
@@ -116,7 +116,7 @@
 
                   </div>                
 
-                 
+                <?php endif; ?> 
 
                   <div class="form-group row">
 

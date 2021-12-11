@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Inventory;
+use App\Models\Config;
 use App\Models\Variation;
 use App\Models\Variationval;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class InventoryController extends Controller
     public function create()
     {
         $branches =Branch::orderBy('id','asc')->get(); 
-        
+        $config = Config::where('id',1)->first(); 
         $variations = Variation::all();       
         $varyData = array();
         foreach($variations as $variation){
@@ -38,19 +39,27 @@ class InventoryController extends Controller
         return view('admin.inventori.create',[
             'title'=>$this->title,
             'branches'=>$branches,
-            'variations'=>$varyData
+            'variations'=>$varyData,
+            'config'=>$config
         ]); 
         
     }
     public function store(Request $request)
     {   
-        $validatedData = $request->validate([ 
+        $config = Config::where('id',1)->first();
+        $auto_bar_code = $config->autobarcode;
+
+        $rules = [ 
             'product_id' =>'required|numeric',
             'branch_id' =>'required|numeric',                     
             'qty' => 'required|numeric',
             'costp' =>'required|numeric',
             'salep' =>'required|numeric',
-            ]);
+        ];
+        if($auto_bar_code){
+            $rules['sku'] = 'required|max:9|min:4|unique:inventories';
+        }
+        $validatedData = $request->validate($rules);
         $variation_json = array();
         if($request->vaval_id !=''){
             $variation_ids = array_filter($request->vaval_id);
@@ -61,27 +70,27 @@ class InventoryController extends Controller
             }
         }
         //the join query find category and subcategory br code to create sku
-
-        $cods = DB::table('items')
-            ->where('items.id', '=', $request->product_id)
-            ->join('categories', 'items.category_id', '=', 'categories.id')
-            ->join('subcategories', 'items.subcategory_id', '=', 'subcategories.id')
-            ->select('categories.br_code as br_cat', 'subcategories.br_code as br_sub')
-            ->get()->first();
-       
-        //check last sku 
-        $counter=0;    
-        $last_sku =  DB::table('skucounters')->latest('id')->first();       
-        if($last_sku){
-            $counter = intval( trim($last_sku->skus));
-            $counter++;         
+        if($auto_bar_code){
+            $sku = $request->sku;
         }else{
-            $counter = 11;
+            $cods = DB::table('items')
+                ->where('items.id', '=', $request->product_id)
+                ->join('categories', 'items.category_id', '=', 'categories.id')
+                ->join('subcategories', 'items.subcategory_id', '=', 'subcategories.id')
+                ->select('categories.br_code as br_cat', 'subcategories.br_code as br_sub')
+                ->get()->first();        
+            //check last sku 
+            $counter=0;    
+            $last_sku =  DB::table('skucounters')->latest('id')->first();       
+            if($last_sku){
+                $counter = intval( trim($last_sku->skus));
+                $counter++;         
+            }else{
+                $counter = 11;
+            }            
+            //make sku
+            $sku = $cods->br_cat.$cods->br_sub.$counter;
         }
-        
-        //make sku
-        $sku = $cods->br_cat.$cods->br_sub.$counter;
-    
         $inventory = [
            'branch_id' => $request->branch_id,
            'item_id' => $request->product_id,
@@ -96,11 +105,12 @@ class InventoryController extends Controller
             //trak inventory 
 
             $this->SaveTrackInventory($newInventory->id,$newInventory->item_id,auth()->user()->id,$newInventory->branch_id,$newInventory->sku,$newInventory->qty,'Manual Add');
-            
-            //update sku counter 
-            $skucounters = new Skucounter;
-            $skucounters->skus = $counter;
-            $skucounters->save();           
+            if(!$auto_bar_code){
+                //update sku counter 
+                $skucounters = new Skucounter;
+                $skucounters->skus = $counter;
+                $skucounters->save(); 
+            }          
             $status = $newInventory->sku.' Inventory Saved! ';
         }else{
             $status = 'Something went wrong, Try Again';

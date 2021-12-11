@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subcategory;
+use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
@@ -27,8 +28,9 @@ class SubcategoryController extends Controller
     {
         $categories =Category::all();       
         if($categories->count() > 0){
+            $config = Config::where('id',1)->first(); 
             
-            return view('admin.subcategory.create',['title'=>$this->title,'subtitle'=>$this->subtitle,'categories'=>$categories]); 
+            return view('admin.subcategory.create',['title'=>$this->title,'subtitle'=>$this->subtitle,'categories'=>$categories, 'config'=>$config]); 
         }else{
            return redirect('subcategories')->with('status', 'You must create a Category First. ');
         }
@@ -42,17 +44,20 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //print_r($request->input());
-        $validatedData = $request->validate([ 
-            'category_id' =>'required|numeric',
-            'br_code'=>  'required|max:999|min:100|numeric|unique:subcategories',         
+        $config = Config::where('id',1)->first(); 
+        $rules = [ 
+            'category_id' =>'required|numeric',                    
             'name' => 'required|max:30'
-            ]);
+        ];
+        if(!$config->autobarcode){
+            $rules['br_code'] = 'required|max:999|min:100|numeric|unique:subcategories';
+        }
+        $validatedData = $request->validate($rules);
         //validate
         $newSubCategory = new Subcategory;           
         $newSubCategory->category_id = $request->category_id;            
         $newSubCategory->name = ucfirst($request->name);
-        $newSubCategory->br_code = $request->br_code;
+        $newSubCategory->br_code = ($request->br_code)?:'0';
        
         if($newSubCategory->save()){
             return redirect('subcategories')->with('status', 'Sub Category Created!');
@@ -81,7 +86,8 @@ class SubcategoryController extends Controller
     public function edit(Subcategory $Subcategory)
     {
         $categories =Category::all();
-        return view('admin.subcategory.update',['title'=>$this->title,'subtitle'=>$this->subtitle,'subcategory'=>$Subcategory,'categories'=>$categories]);
+        $config = Config::where('id',1)->first(); 
+        return view('admin.subcategory.update',['title'=>$this->title,'subtitle'=>$this->subtitle,'subcategory'=>$Subcategory,'categories'=>$categories,'config'=>$config]);
     }
 
     /**
@@ -93,17 +99,18 @@ class SubcategoryController extends Controller
      */
     public function update(Request $request, Subcategory $Subcategory)
     {
-        //print_r($request->input());
-        $validatedData = $request->validate([ 
-            'category_id' =>'required|numeric',
-             'br_code'=>  'required|max:999|min:100|numeric',          
+        $config = Config::where('id',1)->first(); 
+        $rules = [ 
+            'category_id' =>'required|numeric',                    
             'name' => 'required|max:30'
-            ]);
-        //validate
-       // $newSubCategory = new SubCategory;           
+        ];
+        if(!$config->autobarcode){
+            $rules['br_code'] = 'required|max:999|min:100|numeric|unique:subcategories';
+        }
+        $validatedData = $request->validate($rules);          
         $Subcategory->category_id = $request->category_id;            
         $Subcategory->name = ucfirst($request->name);
-        $Subcategory->br_code = $request->br_code;
+        $Subcategory->br_code = ($request->br_code)?:'0';
        
         if($Subcategory->save()){
             return redirect('subcategories')->with('status', 'Sub Category Update!');

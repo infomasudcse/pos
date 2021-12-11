@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,7 @@ class CategoryController extends Controller
 
     public function index()
     {
+        
         $data = ['title'=>$this->title, 'subtitle'=>$this->subtitle];
         return view('admin.category.index',$data);
     }
@@ -26,7 +28,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create',['title'=>$this->title, 'subtitle'=>$this->subtitle,]);
+        $config = Config::where('id',1)->first();
+        return view('admin.category.create',['title'=>$this->title, 'subtitle'=>$this->subtitle,'config' => $config]);
     }
 
     /**
@@ -37,16 +40,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-         //print_r( $request->input());          
-        $validatedData = $request->validate([          
-            'name' => 'required|max:30', 
-            'br_code'=>  'required|max:99|min:10|numeric|unique:categories',       
+        $config = Config::where('id',1)->first(); 
+        $rules = [          
+            'name' => 'required|max:30',          
             'tax_code' => 'required|max:50|numeric'
-        ]);
+        ];
+        if(!$config->autobarcode){
+            $rules['br_code'] = 'required|max:99|min:10|numeric|unique:categories';
+        }        
+        $validatedData = $request->validate($rules);
         //validate
         $newCategory = new Category;           
         $newCategory->name = ucfirst($request->name); 
-        $newCategory->br_code = $request->br_code;           
+        $newCategory->br_code = ($request->br_code)?:'0';           
         $newCategory->tax_code = $request->tax_code;
             if($newCategory->save()){
                 return redirect('categories')->with('status', 'Category Just Created!');
@@ -74,8 +80,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {       
-    
-        return view('admin.category.update',['title'=>$this->title, 'subtitle'=>$this->subtitle,'category'=>$category]);
+        $config = Config::where('id',1)->first();
+        return view('admin.category.update',['title'=>$this->title, 'subtitle'=>$this->subtitle,'category'=>$category,'config' => $config]);
     
     }
 
@@ -88,16 +94,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-         $validatedData = $request->validate([          
-            'name' => 'required|max:30',  
-            'br_code'=>  'required|max:99|min:10|numeric',         
+        $config = Config::where('id',1)->first(); 
+        $rules = [          
+            'name' => 'required|max:30',          
             'tax_code' => 'required|max:50|numeric'
-        ]);
+        ];
+        if(!$config->autobarcode){
+            $rules['br_code'] = 'required|max:99|min:10|numeric|unique:categories';
+        }
+        $validatedData = $request->validate($rules);
 
         //validate
 
          $category->name = ucfirst($request->name);
-         $category->br_code = $request->br_code;
+         $category->br_code = ($request->br_code)?:'0';
          $category->tax_code = $request->tax_code;
         if($category->save()){
             return redirect('categories')->with('status', 'Category Updated!');
