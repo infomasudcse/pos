@@ -1,0 +1,19 @@
+.summary_table{
+	width:100%;
+}
+.summary_divider{
+	height: 0;
+    margin: .5rem 0;
+    overflow: hidden;
+    border-top: 2px solid #0e0e0e;
+}
+#inventori thead{
+	background-color:#f6f6f6;
+}
+.small_input{
+	width:90%;
+}
+
+
+
+
