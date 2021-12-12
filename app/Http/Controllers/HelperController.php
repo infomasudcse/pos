@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-//use App\Models\Inventory;
+
 use App\Traits\InventoryTrait;
 use DNS1D;
 
@@ -28,8 +28,15 @@ class HelperController extends Controller
             ->join('items', 'items.id', '=', 'inventories.item_id')            
             ->select('inventories.*','items.name')
             ->get()->first();
-        //load view    
-		return view('admin.barcode',$data);
+        //load view 
+		if($data['configs']->br_line == '1'){
+			$page = 'admin.singlelinebarcode';
+		} elseif($data['configs']->br_line == '2') {
+			$page = 'admin.twolinebarcode';
+		} else{
+			$page = 'admin.fourlinebarcode';
+		}
+		return view($page, $data);
 		
 	}
 

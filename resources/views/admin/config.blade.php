@@ -139,25 +139,6 @@
                       </div>                      
                     </div>
 
-                    <div class="form-group row">
-                      <div class="col"><h3 class="form-title">Ecommerce Setup</h3></div>
-                    </div>  
-
-                    <div class="form-group row">
-                      <label for="ecommerce" class="col-3 col-form-label">Enable </label>
-                      <div class="col-2">
-                        <input type="checkbox" class="form-control" name="ecommerce" id="ecommerce" value="1" {{ (($cf->ecommerce) ? 'checked': '') }}>
-                      </div>
-                      <div class="col-4">
-                           <p id="check-msg" class="d-inline-block text-truncate font-weight-light font-italic text-danger"> 
-                          {{ (($cf->ecommerce) ? 'Ecommerce Active': 'Ecommerce Not Active') }}
-                          </p>
-
-                        </div>
-                    </div>
-
-                  
-                  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -166,9 +147,6 @@
                 </div>
                 <!-- /.card-footer -->
               </form>
-
-
-
 
               </div>
             </div>
